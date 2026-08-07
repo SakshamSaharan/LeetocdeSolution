@@ -1,1 +1,25 @@
-
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int i = 0;
+        int k = 0;
+        while(i<chars.size()){
+            int count =0;
+            char current = chars[i];
+            while(i<chars.size() && chars[i]==current){
+                count++;
+                i++;
+            }
+            chars[k]=current;
+            k++;
+            if(count>1){
+                string s = to_string(count);
+                for(char c : s){
+                    chars[k]=c;
+                    k++;
+                }
+            }
+        }
+        return k;
+    }
+};
