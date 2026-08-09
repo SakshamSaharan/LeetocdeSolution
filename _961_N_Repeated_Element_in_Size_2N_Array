@@ -12,3 +12,13 @@ public:
         return -1;
     }
 };
+
+# Python solution
+class Solution:
+    def repeatedNTimes(self, nums: List[int]) -> int:
+        s = {-1}
+        for i in nums:
+            if(i in s):
+                return i
+            s.add(i)
+        return -1        
