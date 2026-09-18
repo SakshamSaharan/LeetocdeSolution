@@ -1,22 +1,30 @@
-#include<bits/stdc++.h>
 class Solution {
 public:
     bool isPalindrome(string s) {
-        string ans="";
-        for(int i=0;s[i] != '\0';i++){
-            if(isalnum(s[i])){
-                ans+=tolower(s[i]);
+        bool pali = true;
+        string res = "";
+        for(int i=0;i<s.size();i++){
+            if(! isalnum(s[i])){
+                continue;
+            } 
+            else{
+                if(s[i] >= 'A' && s[i] <= 'Z'){
+                    int x = s[i] - 'A';
+                    s[i] = 'a' + x;
+                }
+                res += s[i];
             }
         }
-        int n= ans.length();
-        int st=0,end=n-1;
-        while(end>st){
-            if(ans[st] != ans[end]){
-                return false;
+        int j = res.size()-1;
+        int i = 0;
+        while(j > i){
+            if(res[j] != res[i]){
+                pali = false;
+                break;
             }
-            st++;
-            end--;
+            i++;
+            j--;
         }
-        return true;
+        return pali;
     }
 };
