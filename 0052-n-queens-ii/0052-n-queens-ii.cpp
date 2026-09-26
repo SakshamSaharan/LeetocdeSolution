@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool issafe(vector<vector<char>>board,int row,int col){
+    bool issafe(vector<vector<char>>& board,int row,int col){
         int n = board.size();
         for(int i=0;i<n;i++){
             if(board[row][i] == 'Q') return false;
@@ -16,7 +16,7 @@ public:
         }
         return true;
     }
-    int nqueens(vector<vector<char>>board,int row){
+    int nqueens(vector<vector<char>>& board,int row){
         int n = board.size();
         if(row == n){
             return 1;
