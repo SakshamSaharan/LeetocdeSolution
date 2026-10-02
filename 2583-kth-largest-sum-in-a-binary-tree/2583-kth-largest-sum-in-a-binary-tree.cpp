@@ -16,13 +16,13 @@ public:
         queue<TreeNode*>q;
         q.push(root);
         q.push(NULL);
-        vector<long long>ans;
         long long currsum = 0;
+        priority_queue<long long>pq;
         while(! q.empty()){
             TreeNode*curr = q.front();
             q.pop();
             if(curr == NULL){
-                ans.push_back(currsum);
+                pq.push(currsum);
                 currsum = 0;
                 if(q.empty()) break;
                 q.push(NULL);
@@ -32,8 +32,11 @@ public:
             if(curr->left != NULL) q.push(curr->left);
             if(curr->right != NULL) q.push(curr->right);
         }
-        if(ans.size() < k) return -1;
-        sort(ans.begin(),ans.end(),greater<long long>());
-        return ans[k-1];
+        if(pq.size() < k) return -1;
+        while(k > 1){
+            pq.pop();
+            k--;
+        }
+        return pq.top();
     }
 };
