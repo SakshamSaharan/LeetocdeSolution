@@ -12,10 +12,18 @@
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        if(p == NULL && q == NULL) return true;
-        if(p == NULL || q == NULL) return false;
+        queue<pair<TreeNode*,TreeNode*>>qui;
+        qui.push(make_pair(p,q));
+        while(! qui.empty()){
+            pair<TreeNode*,TreeNode*> info = qui.front();
+            qui.pop();
+            if(info.first == NULL && info.second == NULL) continue;
+            if(info.first == NULL || info.second == NULL) return false;
+            if(info.first->val != info.second->val) return false;
 
-        if(p->val != q->val) return false;
-        return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+            qui.push(make_pair(info.first->left,info.second->left));
+            qui.push(make_pair(info.first->right,info.second->right));
+        }
+        return true;
     }
 };
