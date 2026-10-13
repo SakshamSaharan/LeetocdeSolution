@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-pair<int,int> diametre(TreeNode* root){
-    if(root == NULL) return make_pair(0,0);
-    // diametre,height
-    pair<int,int> leftinfo = diametre(root->left);
-    pair<int,int> rightinfo = diametre(root->right);
-    int currdiametre = leftinfo.second + rightinfo.second + 1;
-    int finaldiametre = max(currdiametre,max(leftinfo.first,rightinfo.first));
-    int finalheight = max(leftinfo.second,rightinfo.second) + 1;
+    pair<int,int>diametre(TreeNode* root){
+        if(root == NULL) return make_pair(0,0);
+        pair<int,int> leftinfo = diametre(root->left);
+        pair<int,int> rightinfo = diametre(root->right);
 
-    return make_pair(finaldiametre,finalheight);
-}
+        int currdiametre = leftinfo.second + rightinfo.second + 1;
+        int finalheight = max(leftinfo.second,rightinfo.second) + 1;
+        int finaldiametre = max(max(leftinfo.first,rightinfo.first),currdiametre);
+
+        return make_pair(finaldiametre,finalheight);
+    }
     int diameterOfBinaryTree(TreeNode* root) {
-        return diametre(root).first-1;
+        return diametre(root).first - 1;
     }
 };
