@@ -9,17 +9,32 @@
  */
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root == NULL) return NULL;
-        if(root->val == p->val || root->val == q->val){
-            return root;
-        }
-        TreeNode* leftsubtree = lowestCommonAncestor(root->left,p,q);
-        TreeNode* rightsubtree = lowestCommonAncestor(root->right,p,q);
+    bool nodepath(TreeNode* root,TreeNode* n,vector<TreeNode*>& path){
+        if(root == nullptr) return false;
+        path.push_back(root);
+        if(root->val == n->val) return true;
 
-        if(leftsubtree != NULL && rightsubtree != NULL){
-            return root;
+        bool leftpath = nodepath(root->left,n,path);
+        bool rightpath = nodepath(root->right,n,path);
+        if(leftpath || rightpath) return true;
+
+        path.pop_back();
+        return false;
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<TreeNode*>path1;
+        vector<TreeNode*>path2;
+        nodepath(root,p,path1);
+        nodepath(root,q,path2);
+        TreeNode* lca = nullptr;
+        int i=0;
+        while(i<path1.size() && i<path2.size()){
+            if(path1[i]->val != path2[i]->val){
+                return lca;
+            }
+            lca = path1[i];
+            i++;
         }
-        return leftsubtree == NULL ? rightsubtree : leftsubtree;
+        return lca;
     }
 };
