@@ -11,18 +11,22 @@
  */
 class Solution {
 public:
-    pair<bool,TreeNode*> search(TreeNode* root, int val){
+    pair<bool,TreeNode*> check(TreeNode* root,int val){
         if(root == nullptr) return {false,nullptr};
 
         if(root->val == val) return {true,root};
 
-        if(root->val > val) return search(root->left,val);
-        if(root->val < val) return search(root->right,val);
-        return {false,nullptr};
+        if(root->val > val) return check(root->left,val);
+        if(root->val < val) return check(root->right,val);
+
+        return {false,root};
     }
     TreeNode* searchBST(TreeNode* root, int val) {
-        pair<bool,TreeNode*> check = search(root,val);
-        if(! check.first) return nullptr;
-        return check.second;
+        if(root == nullptr) return nullptr;
+
+        pair<bool,TreeNode*> ans = check(root,val);
+        if(! ans.first) return nullptr;
+
+        return ans.second;
     }
 };
