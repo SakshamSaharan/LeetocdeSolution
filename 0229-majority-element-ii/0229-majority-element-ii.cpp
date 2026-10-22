@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         int count1 = 0,count2 = 0;
-        int cand1,cand2;
+        int cand1=0,cand2=0;
         for(int x : nums){
             if(count1 > 0 && x == cand1){
                 count1++;
@@ -25,14 +25,15 @@ public:
         }
         count1=0;
         count2=0;
-        for(int x : nums){
-            if( x == cand1) count1++;
-            else if( x == cand2) count2++;
-        }
-        vector<int>ans;
         int n = nums.size();
+        vector<int>ans;
+        for(int x : nums){
+            if(x == cand1) count1++;
+            if(x == cand2) count2++;
+        }
         if(count1 > n/3) ans.push_back(cand1);
-        if(count2 > n/3) ans.push_back(cand2);
+        if(count2 > n/3 && cand2 != cand1) ans.push_back(cand2);
+
         return ans;
     }
 };
