@@ -11,13 +11,15 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root,long long low,long long high){
+    bool check(TreeNode* root,TreeNode* low,TreeNode* high){
         if(root == nullptr) return true;
 
-        if(root->val <= low || root->val >= high) return false;
+        if((low != nullptr && root->val <= low->val) ||
+            (high != nullptr && root->val >= high->val))
+            return false;
 
-        bool checkleft = check(root->left,low,root->val);
-        bool checkright = check(root->right,root->val,high);
+        bool checkleft = check(root->left,low,root);
+        bool checkright = check(root->right,root,high);
 
         if(! checkleft || ! checkright) return false;
 
@@ -25,8 +27,8 @@ public:
     }
     bool isValidBST(TreeNode* root) {
         if(root == nullptr) return true;
-        long long low = LLONG_MIN;
-        long long high = LLONG_MAX;
+        TreeNode* low = nullptr;
+        TreeNode* high = nullptr;
         return check(root,low,high);
     }
 };
