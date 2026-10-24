@@ -11,24 +11,23 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root,TreeNode* low,TreeNode* high){
+    bool ans(TreeNode* root,TreeNode* mini,TreeNode* maxi){
         if(root == nullptr) return true;
 
-        if((low != nullptr && root->val <= low->val) ||
-            (high != nullptr && root->val >= high->val))
+        if((mini != nullptr && root->val <= mini->val) || (maxi != nullptr && root->val >= maxi->val)){
             return false;
+        }
 
-        bool checkleft = check(root->left,low,root);
-        bool checkright = check(root->right,root,high);
+        bool checkleft = ans(root->left,mini,root);
+        bool checkright = ans(root->right,root,maxi);
 
-        if(! checkleft || ! checkright) return false;
+        if(!checkleft || !checkright) return false;
 
         return true;
     }
     bool isValidBST(TreeNode* root) {
         if(root == nullptr) return true;
-        TreeNode* low = nullptr;
-        TreeNode* high = nullptr;
-        return check(root,low,high);
+
+        return ans(root,NULL,NULL);
     }
 };
