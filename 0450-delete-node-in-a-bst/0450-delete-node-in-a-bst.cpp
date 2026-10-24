@@ -30,7 +30,7 @@ public:
             if(root->left == nullptr && root->right == nullptr){
                 return nullptr;
             }
-            if(root->left == nullptr || root->right == nullptr){
+            else if(root->left == nullptr || root->right == nullptr){
                 return root->left == nullptr ? root->right : root->left;
             }
             else{
