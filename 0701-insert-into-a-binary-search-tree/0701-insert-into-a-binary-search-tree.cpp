@@ -16,12 +16,26 @@ public:
             TreeNode* newNode = new TreeNode(val);
             return newNode;
         }
-        else if(root->val > val){
-             root->left = insertIntoBST(root->left,val);
+        TreeNode* curr = root;
+        while(true){
+            if(curr->val > val){
+                if(curr->left == nullptr){
+                    TreeNode* newNode = new TreeNode(val);
+                    curr->left = newNode;
+                    break;
+                }
+                curr = curr->left;
+            }
+            else{
+                if(curr->right == nullptr){
+                    TreeNode* newNode = new TreeNode(val);
+                    curr->right = newNode;
+                    break;
+                }
+                curr = curr->right;
+            }
         }
-        else{
-             root->right = insertIntoBST(root->right,val);
-        }
+
         return root;
     }
 };
