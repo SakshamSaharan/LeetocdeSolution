@@ -13,19 +13,19 @@ public:
     TreeNode* lca(TreeNode* root,TreeNode* p,TreeNode* q){
         if(root == nullptr) return nullptr;
 
-        if(root->val == p->val || root->val == q->val) return root;
-
-        TreeNode* leftsubtree = lca(root->left,p,q);
-        TreeNode* rightsubtree = lca(root->right,p,q);
-
-        if(leftsubtree != NULL && rightsubtree != NULL) return root;
-        if(leftsubtree == NULL && rightsubtree == NULL) return nullptr;
-
-        return leftsubtree == nullptr ? rightsubtree : leftsubtree;
+        if(p->val > root->val && q->val > root->val){
+            return lca(root->right,p,q);
+        }
+        else if(p->val < root->val && q->val < root->val){
+            return lca(root->left,p,q);
+        }
+        else{
+            return root;
+        }
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(root == nullptr) return nullptr;
-        TreeNode* ans = lca(root,p,q);
-        return ans;
+
+        return lca(root,p,q);
     }
 };
