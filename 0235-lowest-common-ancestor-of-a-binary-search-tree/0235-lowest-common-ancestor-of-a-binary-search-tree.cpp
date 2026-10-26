@@ -10,35 +10,22 @@
 
 class Solution {
 public:
-    bool nodepath(TreeNode* root,TreeNode* target,vector<TreeNode*>& path){
-        if(root == nullptr) return false;
+    TreeNode* lca(TreeNode* root,TreeNode* p,TreeNode* q){
+        if(root == nullptr) return nullptr;
 
-        path.push_back(root);
-        if(root->val == target->val) return true;
-        bool leftpath = nodepath(root->left,target,path);
-        bool rightpath = nodepath(root->right,target,path);
+        if(root->val == p->val || root->val == q->val) return root;
 
-        if(leftpath || rightpath) return true;
-        path.pop_back();
-        return false;
+        TreeNode* leftsubtree = lca(root->left,p,q);
+        TreeNode* rightsubtree = lca(root->right,p,q);
+
+        if(leftsubtree != NULL && rightsubtree != NULL) return root;
+        if(leftsubtree == NULL && rightsubtree == NULL) return nullptr;
+
+        return leftsubtree == nullptr ? rightsubtree : leftsubtree;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(root == nullptr) return nullptr;
-
-        vector<TreeNode*>path1;
-        vector<TreeNode*>path2;
-
-        nodepath(root,p,path1);
-        nodepath(root,q,path2);
-
-        TreeNode* store = nullptr;
-
-        int i=0;
-        while(i<path1.size() && i<path2.size()){
-            if(path1[i]->val != path2[i]->val) return store;
-            store = path1[i];
-            i++;
-        }
-        return store;
+        TreeNode* ans = lca(root,p,q);
+        return ans;
     }
 };
