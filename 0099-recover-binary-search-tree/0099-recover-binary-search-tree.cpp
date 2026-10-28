@@ -10,27 +10,36 @@
  * };
  */
 class Solution {
+private:
+    TreeNode* first;
+    TreeNode* last;
+    TreeNode* prev;
+    TreeNode* middle;
+    void inorder(TreeNode* root){
+        if(root == nullptr) return;
+        inorder(root->left);
+        if(prev != NULL && root->val < prev->val){
+
+            if(first == nullptr){
+                first = prev;
+                middle = root;
+            }
+            else{
+                last = root;
+            }
+        }
+        prev = root;
+        inorder(root->right);
+    }
 public:
-    void inorder(TreeNode* root,vector<int>& vec){
-        if(root == nullptr) return;
-
-        inorder(root->left,vec);
-        vec.push_back(root->val);
-        inorder(root->right,vec);
-    }
-    void buildtree(TreeNode* root,vector<int>& vec,int& i){
-        if(root == nullptr) return;
-
-        buildtree(root->left,vec,i);
-        root->val = vec[i++];
-        buildtree(root->right,vec,i);
-    }
     void recoverTree(TreeNode* root) {
         if(root == nullptr) return;
-        vector<int>vec;
-        inorder(root,vec);
-        sort(vec.begin(), vec.end());
-        int i=0;
-        buildtree(root,vec,i);
+        first = last = middle = NULL;
+        prev = new TreeNode(INT_MIN);
+
+        inorder(root);
+
+        if(first && last) swap(first->val,last->val);
+        else if(first && middle) swap(first->val,middle->val);
     }
 };
