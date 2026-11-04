@@ -22,7 +22,6 @@ public:
     BSTIterator(TreeNode* root) {
         leftall(root);
     }
-    
     int next() {
         TreeNode* top = st.top();
         st.pop();
@@ -31,7 +30,6 @@ public:
         }
         return top->val;
     }
-    
     bool hasNext() {
         return !st.empty();
     }
