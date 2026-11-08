@@ -25,11 +25,14 @@ public:
             heapify(nums,i,n);
         }
 
-        for(int i=n-1;i>=0;i--){
-            swap(nums[0],nums[i]);
-            heapify(nums,0,i);
-        }
+        int cnt = 1;
 
-        return nums[n-k];
+        while(cnt < k){
+            swap(nums[0],nums[nums.size()-1]);
+            nums.pop_back();
+            heapify(nums,0,nums.size());
+            cnt++;
+        }
+        return nums[0];
     }
 };
