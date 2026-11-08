@@ -24,13 +24,12 @@ public:
         for(int i = (n/2)-1;i>=0;i--){
             heapify(nums,i,n);
         }
-        int cnt = 1;
-        while(cnt < k){
-            swap(nums[0],nums[nums.size()-1]);
-            nums.pop_back();
-            heapify(nums,0,nums.size());
-            cnt++;
+
+        for(int i=n-1;i>=0;i--){
+            swap(nums[0],nums[i]);
+            heapify(nums,0,i);
         }
-        return nums[0];
+
+        return nums[n-k];
     }
 };
