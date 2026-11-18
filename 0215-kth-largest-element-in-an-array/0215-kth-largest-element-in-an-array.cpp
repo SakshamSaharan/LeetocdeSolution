@@ -1,8 +1,7 @@
 class Solution {
 public:
     void heapify(vector<int>& nums,int i,int n){
-        if(i >= n) return;
-
+        if( i >= n ) return;
         int l = 2*i+1;
         int r = 2*i+2;
         int maxI = i;
@@ -24,10 +23,8 @@ public:
         for(int i = (n/2)-1;i>=0;i--){
             heapify(nums,i,n);
         }
-
         int cnt = 1;
-
-        while(cnt < k){
+        while(k != cnt){
             swap(nums[0],nums[nums.size()-1]);
             nums.pop_back();
             heapify(nums,0,nums.size());
