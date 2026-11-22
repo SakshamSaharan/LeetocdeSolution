@@ -10,24 +10,30 @@
  */
 class Solution {
 public:
+    struct compVal{
+        bool operator () (ListNode* first,ListNode* second){
+            return first->val > second->val;
+        }
+    };
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<int,vector<int>,greater<int>>pq;
-
-        for(int i=0;i<lists.size();i++){
-            ListNode* curr = lists[i];
-            while( curr != nullptr){
-                pq.push(curr->val);
-                curr = curr->next;
+        priority_queue<ListNode*,vector<ListNode*>,compVal>pq;
+        for(ListNode* head : lists){
+            if(head != NULL){
+                pq.push(head);
             }
         }
         ListNode* newNode = new ListNode(-1);
         ListNode* temp = newNode;
         while(! pq.empty()){
-            ListNode* nextNode = new ListNode(pq.top());
+            ListNode* smallest = pq.top();
             pq.pop();
-            temp->next = nextNode;
+            temp->next = smallest;
             temp = temp->next;
+            if(smallest->next != nullptr){
+                pq.push(smallest->next);
+            }
         }
+        temp->next = nullptr;
         return newNode->next;
     }
 };
