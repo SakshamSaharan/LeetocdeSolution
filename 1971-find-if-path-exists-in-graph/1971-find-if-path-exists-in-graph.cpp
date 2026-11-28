@@ -1,31 +1,27 @@
 class Solution {
 public:
-    void adjList(vector<vector<int>>& edges,vector<vector<int>>& adj){
-        for(auto edge : edges){
-            int u = edge[0];
-            int v = edge[1];
+    bool dfs(int src,int dest,vector<bool>& visited,vector<vector<int>>& adj){
+        if(src == dest) return true;
+        visited[src] = true;
+
+        for(int v : adj[src]){
+            if(! visited[v]){
+                if(dfs(v,dest,visited,adj)) return true;
+            }
+        }
+        return false;
+    }
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        vector<vector<int>>adj(n);
+        for(auto &e : edges){
+            int u = e[0];
+            int v = e[1];
 
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-    }
-    void dfs(int u,vector<bool>& visited,vector<vector<int>>& adj){
-        visited[u] = true;
-
-        vector<int>neighbour = adj[u];
-        for(int v : neighbour){
-            if(! visited[v]){
-                dfs(v,visited,adj);
-            }
-        }
-    }
-    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
-        vector<vector<int>>adj(n);
-        adjList(edges,adj);
         vector<bool>visited(n,false);
 
-        dfs(source,visited,adj);
-
-        return visited[destination] == true;
+        return dfs(source,destination,visited,adj);
     }
 };
